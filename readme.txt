@@ -4,7 +4,7 @@ Tags: IP, log, register, multisite, wpmu, ip
 Requires at least: 3.1
 Tested up to: 3.7
 Stable tag: 1.5
-Donate link: https://www.wepay.com/donations/halfelf-wp
+Donate link: https://store.halfelf.org/donate/
 
 When a new user registers, their IP address is logged for the admins. Multisite and Single Site!
 
@@ -15,7 +15,7 @@ Spam is one thing, but trolls and sock puppets are another.  Sometimes people ju
 When a user registers, their IP is logged in the `wp_usermeta` under the signup_ip key.  Log into your WP install as an Admin and you can look at their profile or the users table to see what it is. For security purposes their IP is not displayed to them when they see their profile.
 
 * [Plugin Site](http://halfelf.org/plugins/register-ip-ms/)
-* [Donate](https://www.wepay.com/donations/halfelf-wp)
+* [Donate](https://store.halfelf.org/donate/)
 
 == Installation ==
 
