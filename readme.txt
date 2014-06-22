@@ -1,9 +1,9 @@
-=== Register IP - Multiste ===
+=== Register IPs ===
 Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite, wpmu, ip
 Requires at least: 3.1
-Tested up to: 3.9
-Stable tag: 1.5
+Tested up to: 4.0
+Stable tag: 1.6
 Donate link: https://store.halfelf.org/donate/
 
 When a new user registers, their IP address is logged for the admins. Multisite and Single Site!
@@ -49,6 +49,10 @@ On multisite only the Network admins who have access to Network Admin -> Users c
 2. Multisite (Network Admin -> Users menu)
 
 == Changelog ==
+
+= 1.6 =
+* 21 June, 2012 by Ipstenu
+* Cleanup, function names, readme.
 
 = 1.5 = 
 * 17 April, 2012 by Ipstenu
