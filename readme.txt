@@ -3,7 +3,7 @@ Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite, wpmu, ip
 Requires at least: 3.1
 Tested up to: 4.0
-Stable tag: 1.6
+Stable tag: 1.6.1
 Donate link: https://store.halfelf.org/donate/
 
 When a new user registers, their IP address is logged for the admins. Multisite and Single Site!
@@ -50,8 +50,12 @@ On multisite only the Network admins who have access to Network Admin -> Users c
 
 == Changelog ==
 
+= 1.6.1 =
+* 22 June, 2014 by Ipstenu
+* Typo
+
 = 1.6 =
-* 21 June, 2012 by Ipstenu
+* 21 June, 2014 by Ipstenu
 * Cleanup, function names, readme.
 
 = 1.5 = 

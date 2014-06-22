@@ -39,7 +39,7 @@ if(version_compare($wp_version, "3.1", "<"))
         exit($exit_msg);
 }
 
-function helfripms__log_ip($user_id){
+function helfripms_log_ip($user_id){
         $ip = $_SERVER['REMOTE_ADDR']; //Get the IP of the person registering
         update_user_meta($user_id, 'signup_ip', $ip); //Add user metadata to the usermeta table
 }
@@ -48,7 +48,7 @@ function helfripms__log_ip($user_id){
 add_action('user_register', 'helfripms_log_ip');
 
 // If you have the permissions to edit users, you can see their IP in their profile.
-add_action('edit_user_profile', 'helfripms__show_ip_on_profile');
+add_action('edit_user_profile', 'helfripms_show_ip_on_profile');
 
 // Formatting for how it looks on the profile page.
 function helfripms_show_ip_on_profile() {
