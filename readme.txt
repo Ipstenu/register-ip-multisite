@@ -2,7 +2,7 @@
 Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite, wpmu, ip
 Requires at least: 3.1
-Tested up to: 4.0
+Tested up to: 4.3
 Stable tag: 1.6.1
 Donate link: https://store.halfelf.org/donate/
 
@@ -27,10 +27,10 @@ No special activation needed.
 This is because the user was registered before the plugin was installed and/or activated.
 
 = Who can see the IP? =
-Admins and Network Admins. 
+Admins and Network Admins.
 
 = Does this work on MultiSite? =
-Yep! 
+Yep!
 
 = If this works on SingleSite why the name? =
 There's already a plugin called "Register IP", but it didn't work on MultiSite.  I was originally just going to make this a MultiSite-only install, but then I thought 'Why not just go full bore!'  Of course, I decided that AFTER I requested the name and you can't change names. So you can laugh.
@@ -58,7 +58,7 @@ On multisite only the Network admins who have access to Network Admin -> Users c
 * 21 June, 2014 by Ipstenu
 * Cleanup, function names, readme.
 
-= 1.5 = 
+= 1.5 =
 * 17 April, 2012 by Ipstenu
 * Readme cleanup, fixing URLs etc.
 
@@ -73,7 +73,7 @@ On multisite only the Network admins who have access to Network Admin -> Users c
 
 = 1.2 =
 * 15 July 2011 by Ipstenu
-* Dropping support for 3.0.x 
+* Dropping support for 3.0.x
 
 = 1.1 =
 * 3 Dec 2010  by Ipstenu
