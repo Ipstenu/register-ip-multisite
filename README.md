@@ -1,4 +1,7 @@
 register-ip-multisite
 =====================
 
-Register IP
+This is the development repository for the Register IPs plugin.
+
+* [WP Readme](readme.txt)
+* [Changelog](changelog.txt)
