@@ -3,7 +3,7 @@ Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite,
 Requires at least: 3.1
 Tested up to: 4.5
-Stable tag: 1.7
+Stable tag: 1.7.1
 Donate link: https://store.halfelf.org/donate/
 
 When a new user registers, their IP address is logged. Multisite and Single Site!
@@ -48,19 +48,23 @@ On multisite only the Network admins who have access to Network Admin -> Users c
 
 There's a filter! Toss this in an MU plugin:
 
-```
+`
 function filter_ripm_show_ip($theip) {
 	$theip = '<a href="https://duckduckgo.com/?q='.$theip.'">'.$theip.'</a>';
 	return $theip;
 }
 add_filter('ripm_show_ip', 'filter_ripm_show_ip');
-```
+`
 
 == Screenshots ==
 1. Single Site (regular users menu)
 2. Multisite (Network Admin -> Users menu)
 
 == Changelog ==
+
+= 1.7.1 =
+* 09 March, 2016 by Ipstenu
+* Translation gaff on one line
 
 = 1.7 =
 * 07 March, 2016 by Ipstenu

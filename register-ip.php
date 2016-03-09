@@ -1,23 +1,24 @@
 <?php
 /*
 Plugin Name: Register IPs
-Version: 1.7
+Version: 1.7.1
 Description: Logs the IP of the user when they register a new account.
 Author: Mika Epstein, Johnny White
-Author URI: http://ipstenu.org
+Author URI: http://halfelf.org
 Plugin URI: http://halfelf.org/plugins/register-ip-ms
+Text Domain: register-ip-multisite
 
-Register IP Copyright 2005 Johnny White
-Register IPs Copyright 2010-16 Mika Epstein
+	Copyright 2005 Johnny White
+	Copyright 2010-16 Mika Epstein (ipstenu@halfelf.org)
 
     This file is part of Register IPs, a plugin for WordPress.
 
-    Register IP - MultiSite is free software: you can redistribute it and/or modify
+    Register IPs is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 2 of the License, or
     (at your option) any later version.
 
-    Register IP - MultiSite is distributed in the hope that it will be useful,
+    Register IPs is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -95,7 +96,7 @@ class Register_IP_Multisite {
 	 * @access public
 	 */
 	public function column_header_signup_ip($column_headers) {
-	    $column_headers['signup_ip'] = __('IP Address', 'signup_ip');
+	    $column_headers['signup_ip'] = __('IP Address', 'register-ip-multisite');
 	    return $column_headers;
 	}
 	
@@ -119,7 +120,7 @@ class Register_IP_Multisite {
                 return $theip;
             }
         }
-	        return $value;
+	    return $value;
 	}
 	
 	/**
