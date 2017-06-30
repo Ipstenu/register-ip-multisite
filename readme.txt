@@ -2,7 +2,7 @@
 Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite,
 Requires at least: 3.1
-Tested up to: 4.6
+Tested up to: 4.8
 Stable tag: 1.7.1
 Donate link: https://store.halfelf.org/donate/
 
