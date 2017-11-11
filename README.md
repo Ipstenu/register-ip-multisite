@@ -11,4 +11,4 @@ This is the development repository for the Register IPs plugin.
 
 * [Plugin Site](http://halfelf.org/plugins/register-ip-multisite/)
 * [Basic Support](http://wordpress.org/support/plugin/register-ip-multisite/)
-* [Donate](https://store.halfelf.org/donate/)
+* [Donate](https://ko-fi.com/A236CENl/)
