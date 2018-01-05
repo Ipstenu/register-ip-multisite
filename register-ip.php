@@ -49,18 +49,18 @@ class Register_IP_Multisite {
 	 */
 
 	public function init() {
-		add_action( 'user_register', array( $this,'log_ip' ) );
-		add_action( 'edit_user_profile', array( $this,'edit_user_profile' ) );
-		add_action( 'manage_users_custom_column', array( $this,'columns' ), 10, 3 );
-		add_filter( 'plugin_row_meta', array( $this ,'donate_link' ), 10, 2 );
-
-		if ( is_multisite() ) {
-			add_filter( 'wpmu_users_columns', array( $this ,'column_header_signup_ip') );
-		} else {
-			add_filter( 'manage_users_columns', array( $this ,'column_header_signup_ip') );
-		}
+		add_action( 'user_register', array( $this, 'log_ip' ) );
+		add_action( 'edit_user_profile', array( $this, 'edit_user_profile' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'donate_link' ), 10, 2 );
+		add_action( 'manage_users_custom_column', array( $this, 'manage_users_custom_column' ), 10, 3 );
 		add_filter( 'pre_get_users', array( $this, 'columns_sortability' ), 10, 2 );
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_users_sortable_columns' ) );
+
+		if ( is_multisite() ) {
+			add_filter( 'wpmu_users_columns', array( $this ,'column_header_signup_ip' ) );
+		} else {
+			add_filter( 'manage_users_columns', array( $this ,'column_header_signup_ip' ) );
+		}
 
 	}
 
@@ -105,7 +105,7 @@ class Register_IP_Multisite {
 	 * @since 1.0
 	 * @access public
 	 */
-	public function column_header_signup_ip($column_headers) {
+	public function column_header_signup_ip( $column_headers ) {
 		$column_headers['signup_ip'] = __( 'IP Address', 'register-ip-multisite' );
 		return $column_headers;
 	}
@@ -128,7 +128,6 @@ class Register_IP_Multisite {
 	 * @access public
 	 */
 	public function columns_sortability( $query ) {
-
 		if ( 'signup_ip' == $query->get( 'orderby' ) ) {
 			$query->set( 'orderby', 'meta_value' );
 			$query->set( 'meta_key', 'signup_ip' );
@@ -141,18 +140,17 @@ class Register_IP_Multisite {
 	 * @since 1.0
 	 * @access public
 	 */
-	public function columns( $value, $column_name, $user_id ) {
+	public function manage_users_custom_column( $value, $column_name, $user_id ) {
 		if ( $column_name == 'signup_ip' ) {
-			$ip = get_user_meta( $user_id, 'signup_ip', true );
-			if ( $ip != "" ){
-				$theip = $ip;
+			$ip    = get_user_meta( $user_id, 'signup_ip', true );
+			$value = '<em>'.__( 'None Recorded', 'register-ip-multisite' ).'</em>';
+			if ( isset( $ip ) && $ip !== "" && $ip !== "none" ){
+				$value = $ip;
 				if ( has_filter( 'ripm_show_ip' ) ) {
-					$theip = apply_filters( 'ripm_show_ip', $theip );
+					$value = apply_filters( 'ripm_show_ip', $value );
 				}
-				return $theip;
 			} else {
-				$theip = '<em>'.__( 'None Recorded', 'register-ip-multisite' ).'</em>';
-				return $theip;
+				update_user_meta( $user_id, 'signup_ip', 'none' );
 			}
 		}
 		return $value;
