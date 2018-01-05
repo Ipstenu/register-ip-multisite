@@ -1,9 +1,9 @@
 === Register IPs ===
 Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite,
-Requires at least: 3.1
+Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 1.7.1
+Stable tag: 1.8.0
 Donate link: https://ko-fi.com/A236CENl/
 
 When a new user registers, their IP address is logged. Multisite and Single Site!
@@ -61,6 +61,11 @@ add_filter('ripm_show_ip', 'filter_ripm_show_ip');
 2. Multisite (Network Admin -> Users menu)
 
 == Changelog ==
+
+= 1.8.0 =
+* 04 January, 2018 by Ipstenu
+* Column sortability (Whaaaaat!?)
+* Support for proxies [props @mattpramschufer](https://wordpress.org/support/topic/http_x_forwarded_for-2/)
 
 = 1.7.1 =
 * 09 March, 2016 by Ipstenu
