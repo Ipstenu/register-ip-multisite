@@ -4,7 +4,7 @@ Tags: IP, log, register, multisite,
 Requires at least: 4.7
 Tested up to: 4.9
 Stable tag: 1.8.0
-Donate link: https://ko-fi.com/A236CENl/
+Donate link: https://ko-fi.com/A236CEN/
 
 When a new user registers, their IP address is logged. Multisite and Single Site!
 
@@ -12,10 +12,14 @@ When a new user registers, their IP address is logged. Multisite and Single Site
 
 Spam is one thing, but trolls and sock puppets are another.  Sometimes people just decide they're going to be jerks and create multiple accounts with which to harass your honest users.  This plugin helps you fight back by logging the IP address used at the time of creation.
 
-When a user registers, their IP is logged in the `wp_usermeta` under the signup_ip key. Log into your WP install as an Admin and you can look at their profile or the users table to see what it is. For security purposes their IP is not displayed to them when they see their profile.
+Log into your WP install as an Admin and you can look at their profile or the users table to see what it is. For security purposes a user's own IP is not displayed to them when they look at their own profile.
 
 * [Plugin Site](http://halfelf.org/plugins/register-ip-ms/)
-* [Donate](https://ko-fi.com/A236CENl/)
+* [Donate](https://ko-fi.com/A236CEN/)
+
+=== Privacy Notes ===
+
+This plugin adds additional data to a new user's `wp_usermeta` data under the `signup_ip` key. This data is directly tied to the user account, and is only editable via the database. Should a user account be deleted from the site, the data will be automatically deleted.
 
 == Installation ==
 
