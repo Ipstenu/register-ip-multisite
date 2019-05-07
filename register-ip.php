@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Register IPs
-Version: 1.8.0
+Version: 1.8.1
 Description: Logs the IP of the user when they register a new account.
 Author: Mika Epstein, Johnny White
 Author URI: http://halfelf.org
@@ -9,7 +9,7 @@ Plugin URI: http://halfelf.org/plugins/register-ip-ms
 Text Domain: register-ip-multisite
 
 	Copyright 2005 Johnny White
-	Copyright 2010-18 Mika Epstein (ipstenu@halfelf.org)
+	Copyright 2010-19 Mika Epstein (ipstenu@halfelf.org)
 
 	This file is part of Register IPs, a plugin for WordPress.
 
@@ -73,11 +73,11 @@ class Register_IP_Multisite {
 	public function log_ip($user_id){
 		//Get the IP of the person registering
 		$ip = $_SERVER['REMOTE_ADDR'];
-		
+
 		// If there's forwarding going on...
 		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$http_x_headers = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
-			$ip             = $http_x_headers[0];
+			$ip             = sanitize_text_field( $http_x_headers[0] );
 		}
 		update_user_meta( $user_id, 'signup_ip', $ip ); //Add user metadata to the usermeta table
 	}
@@ -94,7 +94,7 @@ class Register_IP_Multisite {
 			<h3><?php _e( 'Signup IP Address', 'register-ip-mutisite' ); ?></h3>
 			<p style="text-indent:15px;"><?php
 			$ip_address = get_user_meta( $user_id, 'signup_ip', true );
-			echo $ip_address;
+			echo esc_html( $ip_address );
 			?></p>
 	<?php
 	}
@@ -112,7 +112,7 @@ class Register_IP_Multisite {
 
 	/*
 	 * Make Custom Columns Sortable
-	 * 
+	 *
 	 * @since 1.8.0
 	 * @access public
 	 */
@@ -123,7 +123,7 @@ class Register_IP_Multisite {
 
 	/*
 	 * Create columns sortability for IP
-	 * 
+	 *
 	 * @since 1.8.0
 	 * @access public
 	 */

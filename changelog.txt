@@ -1,3 +1,20 @@
+= 1.7.1 =
+* 09 March, 2016 by Ipstenu
+* Translation gaff on one line
+
+= 1.7 =
+* 07 March, 2016 by Ipstenu
+* Moved to a class instead of badly named functions
+* Added in filter `ripm_show_ip` to allow people to filter the IP (and add urls as needed - see FAQ)
+
+= 1.6.1 =
+* 22 June, 2014 by Ipstenu
+* Typo
+
+= 1.6 =
+* 21 June, 2014 by Ipstenu
+* Cleanup, function names, readme.
+
 = 1.5 =
 * 17 April, 2012 by Ipstenu
 * Readme cleanup, fixing URLs etc.

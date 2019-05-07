@@ -3,7 +3,7 @@ Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite,
 Requires at least: 4.7
 Tested up to: 5.1
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 Donate link: https://ko-fi.com/A236CEN/
 
 When a new user registers, their IP address is logged. Multisite and Single Site!
@@ -66,24 +66,11 @@ add_filter('ripm_show_ip', 'filter_ripm_show_ip');
 
 == Changelog ==
 
+= 1.8.1 =
+* 07 March 2018 by ipstenu
+* Sanitize and escape IP address (props @juliobox)
+
 = 1.8.0 =
 * 04 January, 2018 by Ipstenu
 * Column sortability (Whaaaaat!?)
 * Support for proxies [props @mattpramschufer](https://wordpress.org/support/topic/http_x_forwarded_for-2/)
-
-= 1.7.1 =
-* 09 March, 2016 by Ipstenu
-* Translation gaff on one line
-
-= 1.7 =
-* 07 March, 2016 by Ipstenu
-* Moved to a class instead of badly named functions
-* Added in filter `ripm_show_ip` to allow people to filter the IP (and add urls as needed - see FAQ)
-
-= 1.6.1 =
-* 22 June, 2014 by Ipstenu
-* Typo
-
-= 1.6 =
-* 21 June, 2014 by Ipstenu
-* Cleanup, function names, readme.
