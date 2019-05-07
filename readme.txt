@@ -2,7 +2,7 @@
 Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite,
 Requires at least: 4.7
-Tested up to: 5.1
+Tested up to: 5.2
 Stable tag: 1.8.1
 Donate link: https://ko-fi.com/A236CEN/
 
