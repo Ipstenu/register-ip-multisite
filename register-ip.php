@@ -1,30 +1,30 @@
 <?php
 /*
 Plugin Name: Register IPs
-Version: 1.8.1
+Version: 1.8.2
 Description: Logs the IP of the user when they register a new account.
 Author: Mika Epstein, Johnny White
 Author URI: http://halfelf.org
 Plugin URI: http://halfelf.org/plugins/register-ip-ms
 Text Domain: register-ip-multisite
 
-	Copyright 2005 Johnny White
-	Copyright 2010-19 Mika Epstein (ipstenu@halfelf.org)
+Copyright 2005 Johnny White
+Copyright 2010-20 Mika Epstein (ipstenu@halfelf.org)
 
-	This file is part of Register IPs, a plugin for WordPress.
+This file is part of Register IPs, a plugin for WordPress.
 
-	Register IPs is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 2 of the License, or
-	(at your option) any later version.
+Register IPs is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
 
-	Register IPs is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+Register IPs is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with WordPress.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with WordPress.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -36,7 +36,6 @@ class Register_IP_Multisite {
 	 * @since 1.7
 	 * @access public
 	 */
-
 	public function __construct() {
 		add_action( 'init', array( &$this, 'init' ) );
 	}
@@ -50,16 +49,17 @@ class Register_IP_Multisite {
 
 	public function init() {
 		add_action( 'user_register', array( $this, 'log_ip' ) );
-		add_action( 'edit_user_profile', array( $this, 'edit_user_profile' ) );
+		add_action( 'edit_user_profile', array( $this, 'edit_user_profile' ), 10, 1 );
+		add_action( 'show_user_profile', array( $this, 'edit_user_profile' ), 10, 1 );
 		add_filter( 'plugin_row_meta', array( $this, 'donate_link' ), 10, 2 );
 		add_action( 'manage_users_custom_column', array( $this, 'manage_users_custom_column' ), 10, 3 );
 		add_filter( 'pre_get_users', array( $this, 'columns_sortability' ), 10, 2 );
 		add_filter( 'manage_users_sortable_columns', array( $this, 'manage_users_sortable_columns' ) );
 
 		if ( is_multisite() ) {
-			add_filter( 'wpmu_users_columns', array( $this ,'column_header_signup_ip' ) );
+			add_filter( 'wpmu_users_columns', array( $this, 'column_header_signup_ip' ) );
 		} else {
-			add_filter( 'manage_users_columns', array( $this ,'column_header_signup_ip' ) );
+			add_filter( 'manage_users_columns', array( $this, 'column_header_signup_ip' ) );
 		}
 
 	}
@@ -70,7 +70,7 @@ class Register_IP_Multisite {
 	 * @since 1.0
 	 * @access public
 	 */
-	public function log_ip($user_id){
+	public function log_ip( $user_id ) {
 		//Get the IP of the person registering
 		$ip = $_SERVER['REMOTE_ADDR'];
 
@@ -83,20 +83,24 @@ class Register_IP_Multisite {
 	}
 
 	/**
-	 * Show the IP on a profile
+	 * Show the IP on a profile to admins only
 	 *
 	 * @since 1.0
 	 * @access public
 	 */
-	public function edit_user_profile() {
-			$user_id = (int) $_GET['user_id'];
-	?>
-			<h3><?php _e( 'Signup IP Address', 'register-ip-mutisite' ); ?></h3>
-			<p style="text-indent:15px;"><?php
-			$ip_address = get_user_meta( $user_id, 'signup_ip', true );
-			echo esc_html( $ip_address );
-			?></p>
-	<?php
+	public function edit_user_profile( $profileuser ) {
+		if ( current_user_can( 'manage_options' ) ) {
+			$user_id = $profileuser->ID;
+			?>
+			<h3><?php esc_html_e( 'Signup IP Address', 'register-ip-mutisite' ); ?></h3>
+			<p style="text-indent:15px;">
+				<?php
+				$ip_address = get_user_meta( $user_id, 'signup_ip', true );
+				echo esc_html( $ip_address );
+				?>
+			</p>
+			<?php
+		}
 	}
 
 	/**
@@ -117,7 +121,7 @@ class Register_IP_Multisite {
 	 * @access public
 	 */
 	public function manage_users_sortable_columns( $columns ) {
-		$columns['signup_ip']  = 'signup_ip';
+		$columns['signup_ip'] = 'signup_ip';
 		return $columns;
 	}
 
@@ -143,8 +147,8 @@ class Register_IP_Multisite {
 	public function manage_users_custom_column( $value, $column_name, $user_id ) {
 		if ( $column_name == 'signup_ip' ) {
 			$ip    = get_user_meta( $user_id, 'signup_ip', true );
-			$value = '<em>'.__( 'None Recorded', 'register-ip-multisite' ).'</em>';
-			if ( isset( $ip ) && $ip !== "" && $ip !== "none" ){
+			$value = '<em>' . __( 'None Recorded', 'register-ip-multisite' ) . '</em>';
+			if ( isset( $ip ) && '' !== $ip && 'none' !== $ip ) {
 				$value = $ip;
 				if ( has_filter( 'ripm_show_ip' ) ) {
 					$value = apply_filters( 'ripm_show_ip', $value );
@@ -162,10 +166,10 @@ class Register_IP_Multisite {
 	 * @since 1.0
 	 * @access public
 	 */
-	public function donate_link($links, $file) {
-		if ( $file == plugin_basename( __FILE__ ) ) {
+	public function donate_link( $links, $file ) {
+		if ( plugin_basename( __FILE__ ) === $file ) {
 			$donate_link = '<a href="https://ko-fi.com/A236CEN/">Donate</a>';
-			$links[] = $donate_link;
+			$links[]     = $donate_link;
 		}
 		return $links;
 	}
