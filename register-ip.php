@@ -9,7 +9,7 @@ Plugin URI: http://halfelf.org/plugins/register-ip-ms
 Text Domain: register-ip-multisite
 
 Copyright 2005 Johnny White
-Copyright 2010-20 Mika Epstein (ipstenu@halfelf.org)
+Copyright 2010-22 Mika Epstein (ipstenu@halfelf.org)
 
 This file is part of Register IPs, a plugin for WordPress.
 
