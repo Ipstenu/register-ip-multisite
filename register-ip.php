@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Register IPs
-Version: 1.8.2
+Version: 1.8.3
 Description: Logs the IP of the user when they register a new account.
 Author: Mika Epstein, Johnny White
 Author URI: http://halfelf.org
@@ -31,7 +31,7 @@ along with WordPress.  If not, see <http://www.gnu.org/licenses/>.
 class Register_IP_Multisite {
 
 	/**
-	 * Let's get this party started
+	 * Let's get this party started.
 	 *
 	 * @since 1.7
 	 * @access public
@@ -41,7 +41,7 @@ class Register_IP_Multisite {
 	}
 
 	/**
-	 * All init functions
+	 * All init functions.
 	 *
 	 * @since 1.7
 	 * @access public
@@ -71,15 +71,15 @@ class Register_IP_Multisite {
 	 * @access public
 	 */
 	public function log_ip( $user_id ) {
-		//Get the IP of the person registering
-		$ip = $_SERVER['REMOTE_ADDR'];
+		//Get the IP of the person registering.
+		$ip = sanitize_text_field( $_SERVER['REMOTE_ADDR'] );
 
 		// If there's forwarding going on...
 		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$http_x_headers = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
 			$ip             = sanitize_text_field( $http_x_headers[0] );
 		}
-		update_user_meta( $user_id, 'signup_ip', $ip ); //Add user metadata to the usermeta table
+		update_user_meta( $user_id, 'signup_ip', $ip ); // Add user metadata to the usermeta table.
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Register_IP_Multisite {
 		if ( current_user_can( 'manage_options' ) ) {
 			$user_id = $profileuser->ID;
 			?>
-			<h3><?php esc_html_e( 'Signup IP Address', 'register-ip-mutisite' ); ?></h3>
+			<h3><?php esc_html_e( 'Signup IP Address', 'register-ip-multisite' ); ?></h3>
 			<p style="text-indent:15px;">
 				<?php
 				$ip_address = get_user_meta( $user_id, 'signup_ip', true );
@@ -132,7 +132,7 @@ class Register_IP_Multisite {
 	 * @access public
 	 */
 	public function columns_sortability( $query ) {
-		if ( 'signup_ip' == $query->get( 'orderby' ) ) {
+		if ( 'signup_ip' === $query->get( 'orderby' ) ) {
 			$query->set( 'orderby', 'meta_value' );
 			$query->set( 'meta_key', 'signup_ip' );
 		}
@@ -145,7 +145,7 @@ class Register_IP_Multisite {
 	 * @access public
 	 */
 	public function manage_users_custom_column( $value, $column_name, $user_id ) {
-		if ( $column_name == 'signup_ip' ) {
+		if ( 'signup_ip' === $column_name ) {
 			$ip    = get_user_meta( $user_id, 'signup_ip', true );
 			$value = '<em>' . __( 'None Recorded', 'register-ip-multisite' ) . '</em>';
 			if ( isset( $ip ) && '' !== $ip && 'none' !== $ip ) {

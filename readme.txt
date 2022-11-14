@@ -2,8 +2,8 @@
 Contributors: Ipstenu, JohnnyWhite2007
 Tags: IP, log, register, multisite,
 Requires at least: 4.7
-Tested up to: 6.0
-Stable tag: 1.8.2
+Tested up to: 6.1
+Stable tag: 1.8.3
 Donate link: https://ko-fi.com/A236CEN/
 
 When a new user registers, their IP address is logged. Supports multisite and single site!
@@ -74,6 +74,12 @@ add_filter('ripm_show_ip', 'filter_ripm_show_ip');
 2. Multisite (Network Admin -> Users menu)
 
 == Changelog ==
+
+= 1.8.3 =
+* XX November 2022 by Ipstenu
+* PHPCS
+* Spelling
+* Small security improvements
 
 = 1.8.2 =
 * 02 August 2020 by Ipstenu
