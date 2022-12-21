@@ -72,18 +72,38 @@ class Register_IP_Multisite {
 	 */
 	public function log_ip( $user_id ) {
 
+		// Default
+		$is_xfh = false;
+
 		//Get the IP of the person registering.
-		$ip = ( isset( $_SERVER['REMOTE_ADDR'] ) && rest_is_ip_address( $_SERVER['REMOTE_ADDR'] ) ) ? sanitize_text_field( $_SERVER['REMOTE_ADDR'] ) : '';
+		$pure_ip = ( isset( $_SERVER['REMOTE_ADDR'] ) ) ? sanitize_text_field( $_SERVER['REMOTE_ADDR'] ) : '';
 
 		// If there's forwarding going on, check if we support it before going on.
 		if ( ! defined( 'REGISTER_UP_NO_FORWARD' ) || false === REGISTER_UP_NO_FORWARD ) {
 			if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 				$headers = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
-				$ip      = ( isset( $headers[0] ) && rest_is_ip_address( $headers[0] ) ) ? sanitize_text_field( $http_x_headers[0] ) . '*' : '';
+				if ( isset( $headers[0] ) ) {
+					$pure_ip = sanitize_text_field( $headers[0] );
+					$is_xfh  = ( ! empty( $pure_ip ) ) ? true : false;
+				}
 			}
 		}
 
-		update_user_meta( $user_id, 'signup_ip', $ip ); // Add user metadata to the usermeta table.
+		// If this is localhost, we should let a person know.
+		$localhost = array( 'localhost', '::1', '127.0.0.1' );
+		if ( in_array( $pure_ip, $localhost, true ) ) {
+			$ip = 'localhost';
+		} else {
+			$ip = $pure_ip;
+		}
+
+		// If this was set by XFH, we put an asterisk:
+		if ( $is_xfh ) {
+			$ip .= '*';
+		}
+
+		// Add user metadata to the usermeta table.
+		update_user_meta( $user_id, 'signup_ip', $ip );
 	}
 
 	/**
@@ -99,8 +119,31 @@ class Register_IP_Multisite {
 			<h3><?php esc_html_e( 'Signup IP Address', 'register-ip-multisite' ); ?></h3>
 			<p style="text-indent:15px;">
 				<?php
-				$ip_address = get_user_meta( $user_id, 'signup_ip', true );
-				echo esc_html( $ip_address );
+				$ip = get_user_meta( $user_id, 'signup_ip', true );
+
+				$is_xfh = false;
+
+				// Remove asterisk if found to not break filter.
+				if ( substr( $ip, -1 ) === '*' ) {
+					$ip     = substr( $ip, 0, -1 );
+					$is_xfh = true;
+				}
+
+				if ( isset( $ip ) && '' !== $ip && 'none' !== $ip ) {
+					$value = $ip;
+					if ( has_filter( 'ripm_show_ip' ) ) {
+						$value = apply_filters( 'ripm_show_ip', $filter_ip );
+					}
+				} else {
+					update_user_meta( $user_id, 'signup_ip', 'none' );
+				}
+
+				// Restore asterisk if it was set above.
+				if ( true === $is_xfh ) {
+					$value .= ' *';
+				}
+
+				echo esc_html( $value );
 				?>
 			</p>
 			<?php
