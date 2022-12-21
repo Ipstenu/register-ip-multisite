@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Register IPs
-Version: 1.8.3
+Version: 1.9
 Description: Logs the IP of the user when they register a new account.
 Author: Mika Epstein, Johnny White
 Author URI: http://halfelf.org
@@ -71,14 +71,18 @@ class Register_IP_Multisite {
 	 * @access public
 	 */
 	public function log_ip( $user_id ) {
-		//Get the IP of the person registering.
-		$ip = sanitize_text_field( $_SERVER['REMOTE_ADDR'] );
 
-		// If there's forwarding going on...
-		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			$http_x_headers = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
-			$ip             = sanitize_text_field( $http_x_headers[0] );
+		//Get the IP of the person registering.
+		$ip = ( isset( $_SERVER['REMOTE_ADDR'] ) && rest_is_ip_address( $_SERVER['REMOTE_ADDR'] ) ) ? sanitize_text_field( $_SERVER['REMOTE_ADDR'] ) : '';
+
+		// If there's forwarding going on, check if we support it before going on.
+		if ( ! defined( 'REGISTER_UP_NO_FORWARD' ) || false === REGISTER_UP_NO_FORWARD ) {
+			if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+				$headers = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
+				$ip      = ( isset( $headers[0] ) && rest_is_ip_address( $headers[0] ) ) ? sanitize_text_field( $http_x_headers[0] ) . '*' : '';
+			}
 		}
+
 		update_user_meta( $user_id, 'signup_ip', $ip ); // Add user metadata to the usermeta table.
 	}
 
@@ -146,15 +150,28 @@ class Register_IP_Multisite {
 	 */
 	public function manage_users_custom_column( $value, $column_name, $user_id ) {
 		if ( 'signup_ip' === $column_name ) {
-			$ip    = get_user_meta( $user_id, 'signup_ip', true );
-			$value = '<em>' . __( 'None Recorded', 'register-ip-multisite' ) . '</em>';
+			$ip     = get_user_meta( $user_id, 'signup_ip', true );
+			$value  = '<em>' . __( 'None Recorded', 'register-ip-multisite' ) . '</em>';
+			$is_xfh = false;
+
+			// Remove asterisk if found to not break filter.
+			if ( substr( $ip, -1 ) === '*' ) {
+				$ip     = substr( $ip, 0, -1 );
+				$is_xfh = true;
+			}
+
 			if ( isset( $ip ) && '' !== $ip && 'none' !== $ip ) {
 				$value = $ip;
 				if ( has_filter( 'ripm_show_ip' ) ) {
-					$value = apply_filters( 'ripm_show_ip', $value );
+					$value = apply_filters( 'ripm_show_ip', $filter_ip );
 				}
 			} else {
 				update_user_meta( $user_id, 'signup_ip', 'none' );
+			}
+
+			// Restore asterisk if it was set above.
+			if ( true === $is_xfh ) {
+				$value .= ' *';
 			}
 		}
 		return $value;
