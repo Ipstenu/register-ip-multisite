@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Register IPs
-Version: 1.9
+Version: 1.9.1
 Description: Logs the IP of the user when they register a new account.
 Author: Mika Epstein, Johnny White
 Author URI: http://halfelf.org
@@ -9,7 +9,7 @@ Plugin URI: http://halfelf.org/plugins/register-ip-ms
 Text Domain: register-ip-multisite
 
 Copyright 2005 Johnny White
-Copyright 2010-22 Mika Epstein (ipstenu@halfelf.org)
+Copyright 2010-23 Mika Epstein (ipstenu@halfelf.org)
 
 This file is part of Register IPs, a plugin for WordPress.
 
@@ -132,7 +132,7 @@ class Register_IP_Multisite {
 				if ( isset( $ip ) && '' !== $ip && 'none' !== $ip ) {
 					$value = $ip;
 					if ( has_filter( 'ripm_show_ip' ) ) {
-						$value = apply_filters( 'ripm_show_ip', $filter_ip );
+						$value = apply_filters( 'ripm_show_ip', $value );
 					}
 				} else {
 					update_user_meta( $user_id, 'signup_ip', 'none' );
@@ -206,7 +206,7 @@ class Register_IP_Multisite {
 			if ( isset( $ip ) && '' !== $ip && 'none' !== $ip ) {
 				$value = $ip;
 				if ( has_filter( 'ripm_show_ip' ) ) {
-					$value = apply_filters( 'ripm_show_ip', $filter_ip );
+					$value = apply_filters( 'ripm_show_ip', $value );
 				}
 			} else {
 				update_user_meta( $user_id, 'signup_ip', 'none' );
